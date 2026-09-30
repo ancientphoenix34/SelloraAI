@@ -17,7 +17,7 @@ app.get("/health",(req,res)=>{
     res.json({status:true})
 })
 
-app.use("api/auth",proxy(AUTH_SERVICE_URL))
+app.use("/api/auth",proxy(AUTH_SERVICE_URL))
 
 app.listen(PORT,()=>{
     console.log(`Gateway is running on port ${PORT}`)
