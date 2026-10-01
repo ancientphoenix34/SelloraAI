@@ -3,6 +3,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./configs/db";
 import authRouter from "./routes/auth.route";
+import dns from 'node:dns';
+
+// Force Node to use Google DNS for SRV resolution
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 dotenv.config();
 
 const PORT=process.env.PORT;
