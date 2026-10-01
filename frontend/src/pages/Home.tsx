@@ -4,10 +4,24 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {FcGoogle} from "react-icons/fc";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/utils/firebase";
+import api from "@/utils/axios";
 const Home = () => {
 
   const [openMenu, setOpenMenu] = useState(false);
   const [modelOpen, setModelOpen] = useState(false);
+
+  const googleAuth=async()=>{
+    try{
+      const result=await signInWithPopup(auth,provider);
+      const token=await result.user?.getIdToken();
+      const response=await api.post("/api/auth/login",{token});
+
+    }catch(error){
+     console.log(error)
+    }
+  }
 
   return (
     <div className="min-h-screen w-full bg-white text-slate-900">
@@ -46,7 +60,7 @@ const Home = () => {
             </DialogTitle>
           </DialogHeader>
 
-          <Button variant="outline" className="mt-2 w-full gap-2">
+          <Button onClick={googleAuth} variant="outline" className="mt-2 w-full gap-2">
              <FcGoogle className="w-4 h-4"/>
              Continue with Google
           </Button>
