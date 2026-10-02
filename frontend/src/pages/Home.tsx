@@ -3,7 +3,7 @@ import logo from "../assets/logo.png"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import {FcGoogle} from "react-icons/fc";
+import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/utils/firebase";
 import api from "@/utils/axios";
@@ -12,14 +12,14 @@ const Home = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [modelOpen, setModelOpen] = useState(false);
 
-  const googleAuth=async()=>{
-    try{
-      const result=await signInWithPopup(auth,provider);
-      const token=await result.user?.getIdToken();
-      const response=await api.post("/api/auth/login",{token});
+  const googleAuth = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const token = await result.user?.getIdToken();
+      const response = await api.post("/api/auth/login", { token });
 
-    }catch(error){
-     console.log(error)
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -29,7 +29,7 @@ const Home = () => {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-2">
             <img src={logo} alt="logo" className="h-6 w-6 rounded-sm object-contain" />
-            <span className="text-lg font-semibold tracking-tigth">
+            <span className="text-lg font-semibold tracking-tight">
               SelloraAI
             </span>
           </div>
@@ -61,8 +61,8 @@ const Home = () => {
           </DialogHeader>
 
           <Button onClick={googleAuth} variant="outline" className="mt-2 w-full gap-2">
-             <FcGoogle className="w-4 h-4"/>
-             Continue with Google
+            <FcGoogle className="w-4 h-4" />
+            Continue with Google
           </Button>
           <p className="mt-4 text-center text-xs text-slate-400">
             Secure authentication by firebase
