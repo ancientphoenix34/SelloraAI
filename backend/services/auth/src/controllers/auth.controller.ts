@@ -51,9 +51,9 @@ export const logout = async (req: Request, res: Response) => {
         res.clearCookie("session", {
             httpOnly: true,
             secure: false,
-            sameSite: "strict"
+            sameSite: "lax"
         })
-        
+
         res.status(200).json({ success: true, message: "User logged out" })
     } catch (error) {
         console.log(error)

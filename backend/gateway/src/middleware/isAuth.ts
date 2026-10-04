@@ -18,7 +18,7 @@ declare global {
 const isAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const sessionId = req.cookies?.session;
-        if (sessionId) {
+        if (!sessionId) {
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized"
@@ -36,9 +36,11 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
         next();
 
     } catch (error) {
+        console.error("isAuth middleware error:", error);
         return res.status(500).json({
             success: false,
-            message: "IsAuth Error"
+            message: "IsAuth Error",
+            error: error instanceof Error ? error.message : String(error)
         })
     }
 }
