@@ -1,22 +1,30 @@
 import { Button } from "@/components/ui/button"
 import logo from "../assets/logo.png"
 import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { LogOut, Menu, X } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/utils/firebase";
 import api from "@/utils/axios";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 const Home = () => {
 
   const [openMenu, setOpenMenu] = useState(false);
   const [modelOpen, setModelOpen] = useState(false);
+
+  const {user}=useSelector((state:RootState)=>state.user);
+
 
   const googleAuth = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const token = await result.user?.getIdToken();
       const response = await api.post("/api/auth/login", { token });
+
+      console.log(response.data);
+      setModelOpen(false);
 
     } catch (error) {
       console.log(error)
@@ -34,9 +42,17 @@ const Home = () => {
             </span>
           </div>
           <div className="hidden items-center gap-3 md:flex">
-            <Button onClick={() => setModelOpen(true)} className="bg-indigo-600 hover:bg-indigo-700">
+            {user?(<div className="flex items-center gap-3">
+            <div></div>
+            <Button variant={"outline"} className="gap-1.5">
+             <LogOut className="h-4 w-4"/>
+             Logout
+            </Button>
+            </div>):(
+               <Button onClick={() => setModelOpen(true)} className="bg-indigo-600 hover:bg-indigo-700">
               Sign In
             </Button>
+            )}
           </div>
           <button className="md:hidden" onClick={() => setOpenMenu(!openMenu)}>
             {openMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
