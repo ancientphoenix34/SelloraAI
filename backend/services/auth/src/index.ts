@@ -5,6 +5,7 @@ import { connectDB } from "./configs/db";
 import authRouter from "./routes/auth.route";
 import dns from 'node:dns';
 import adminRouter from "./routes/admin.route";
+import partnerRouter from "./routes/partner.route";
 
 // Force Node to use Google DNS for SRV resolution
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -24,6 +25,7 @@ app.get("/health",(req,res)=>{
 
 app.use("/",authRouter);
 app.use("/admin",adminRouter);
+app.use('/partner',partnerRouter);
 
 app.listen(PORT,()=>{
     console.log(`Auth service is running on port ${PORT}`)
