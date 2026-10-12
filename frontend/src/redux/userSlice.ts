@@ -1,13 +1,15 @@
-import type { IUser } from "@/App";
+import type { IAdmin, IUser } from "@/App";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface IUserState {
     user: IUser | null
-    loading: boolean
+    loading: boolean;
+    admin: IAdmin | null
 }
 const initialState: IUserState = {
     user: null,
-    loading: true
+    loading: true,
+    admin: null
 }
 const userSlice = createSlice({
     name: "user",
@@ -22,8 +24,11 @@ const userSlice = createSlice({
         logOutUser: (state) => {
             state.user = null
             state.loading = false
+        },
+        setAdmin: (state, action: PayloadAction<IAdmin | null>) => {
+            state.admin = action.payload
         }
     }
 })
 export default userSlice.reducer
-export const { setUser, setLoading, logOutUser } = userSlice.actions
+export const { setUser, setLoading, logOutUser, setAdmin } = userSlice.actions

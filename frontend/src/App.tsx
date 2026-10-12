@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
 import Admin from "./pages/Admin";
 import Partner from "./pages/Partner";
+import { Toaster } from "sonner";
 
 interface ISocialLinks {
   youtube?: string;
@@ -44,6 +45,11 @@ export interface IUser {
   updatedAt: Date;
 }
 
+export interface IAdmin{
+  name:string,
+  email:string
+}
+
 function App() {
   const { currentUser, userLoading } = useGetCurrentUser();
   const { user, loading } = useSelector((state: RootState) => state.user)
@@ -57,6 +63,7 @@ function App() {
   }
   return (
     <>
+    <Toaster/>
       <Routes>
         <Route path="/" element={user?.role === "admin" ? (
           <Navigate to="/admin" replace />
