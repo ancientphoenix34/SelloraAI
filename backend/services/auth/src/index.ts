@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 
 app.get("/health",(req,res)=>{
-    res.json({status:true})
+    res.json({status:true, message:"Auth service is responding"})
 })
 
 app.use("/",authRouter);
